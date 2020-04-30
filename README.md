@@ -25,7 +25,7 @@ Son 5 días en los cuales vamos a ver al microcontrolador, sus periféricos y en
 
 ## Archivos: 📌
 
-* [Taller 1](https://github.com/WelsTheory/Taller-1) - Repositorio de los programas
+* [Taller 1](https://github.com/WelsTheory/Taller1/tree/master/Programas/) - Repositorio de los programas
 * [Simulaciones](https://github.com/WelsTheory/Taller1/tree/master/Simulaciones) - Todas las simulaciones del programa
 
 ### Gracias por formar parte del taller, gracias por la confianza.
