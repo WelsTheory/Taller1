@@ -30,12 +30,12 @@ ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 IMAGE_TYPE=debug
 OUTPUT_SUFFIX=cof
 DEBUGGABLE_SUFFIX=cof
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/HolaMundo.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Pulsadores.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 else
 IMAGE_TYPE=production
 OUTPUT_SUFFIX=hex
 DEBUGGABLE_SUFFIX=cof
-FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/HolaMundo.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+FINAL_IMAGE=dist/${CND_CONF}/${IMAGE_TYPE}/Pulsadores.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 endif
 
 ifeq ($(COMPARE_BUILD), true)
@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=Programa_principal.asm
+SOURCEFILES_QUOTED_IF_SPACED=Programa_princpial.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Programa_principal.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/Programa_principal.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/Programa_princpial.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/Programa_princpial.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/Programa_principal.o
+OBJECTFILES=${OBJECTDIR}/Programa_princpial.o
 
 # Source Files
-SOURCEFILES=Programa_principal.asm
+SOURCEFILES=Programa_princpial.asm
 
 
 
@@ -88,42 +88,42 @@ FIXDEPS=fixDeps
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/HolaMundo.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/Pulsadores.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=16f648a
 MP_LINKER_DEBUG_OPTION= 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/Programa_principal.o: Programa_principal.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/Programa_princpial.o: Programa_princpial.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Programa_principal.o.d 
-	@${RM} ${OBJECTDIR}/Programa_principal.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Programa_principal.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Programa_principal.lst\" -e\"${OBJECTDIR}/Programa_principal.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Programa_principal.o\" \"Programa_principal.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/Programa_principal.o"
-	@${FIXDEPS} "${OBJECTDIR}/Programa_principal.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/Programa_princpial.o.d 
+	@${RM} ${OBJECTDIR}/Programa_princpial.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Programa_princpial.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_PK3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Programa_princpial.lst\" -e\"${OBJECTDIR}/Programa_princpial.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Programa_princpial.o\" \"Programa_princpial.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/Programa_princpial.o"
+	@${FIXDEPS} "${OBJECTDIR}/Programa_princpial.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 else
-${OBJECTDIR}/Programa_principal.o: Programa_principal.asm  nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/Programa_princpial.o: Programa_princpial.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/Programa_principal.o.d 
-	@${RM} ${OBJECTDIR}/Programa_principal.o 
-	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Programa_principal.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Programa_principal.lst\" -e\"${OBJECTDIR}/Programa_principal.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Programa_principal.o\" \"Programa_principal.asm\" 
-	@${DEP_GEN} -d "${OBJECTDIR}/Programa_principal.o"
-	@${FIXDEPS} "${OBJECTDIR}/Programa_principal.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	@${RM} ${OBJECTDIR}/Programa_princpial.o.d 
+	@${RM} ${OBJECTDIR}/Programa_princpial.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Programa_princpial.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Programa_princpial.lst\" -e\"${OBJECTDIR}/Programa_princpial.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Programa_princpial.o\" \"Programa_princpial.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/Programa_princpial.o"
+	@${FIXDEPS} "${OBJECTDIR}/Programa_princpial.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: link
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/HolaMundo.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
+dist/${CND_CONF}/${IMAGE_TYPE}/Pulsadores.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk    
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_PK3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/HolaMundo.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w -x -u_DEBUG -z__ICD2RAM=1 -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -z__MPLAB_DEBUG=1 -z__MPLAB_DEBUGGER_PK3=1 $(MP_LINKER_DEBUG_OPTION) -odist/${CND_CONF}/${IMAGE_TYPE}/Pulsadores.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/HolaMundo.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
+dist/${CND_CONF}/${IMAGE_TYPE}/Pulsadores.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk   
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w  -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -odist/${CND_CONF}/${IMAGE_TYPE}/HolaMundo.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
+	${MP_LD} $(MP_EXTRA_LD_PRE)   -p$(MP_PROCESSOR_OPTION)  -w  -m"${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"   -z__MPLAB_BUILD=1  -odist/${CND_CONF}/${IMAGE_TYPE}/Pulsadores.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}     
 endif
 
 

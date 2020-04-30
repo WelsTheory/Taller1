@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>HolaMundo</name>
-            <creation-uuid>8b60c74a-a2b4-4221-a78d-d01d87027b8e</creation-uuid>
+            <name>Pulsadores</name>
+            <creation-uuid>838d2819-2fdb-4961-8579-3227afa2a19e</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions/>
             <cpp-extensions/>
