@@ -1,0 +1,106 @@
+MPLINK 5.09, LINKER
+Linker Map File - Created Wed May 06 12:13:43 2020
+
+                                 Section Info
+                  Section       Type    Address   Location Size(Bytes)
+                ---------  ---------  ---------  ---------  ---------
+                   .org_0       code   0x000000    program   0x000002
+                   .cinit    romdata   0x000001    program   0x000004
+                   .org_1       code   0x000004    program   0x0000d2
+.config_2007_BUILD/DEFAULT/PRODUCTION/PROGRAM       code   0x002007    program   0x000002
+
+
+
+                              Program Memory Usage 
+                               Start         End      
+                           ---------   ---------      
+                            0x000000    0x000002      
+                            0x000004    0x00006c      
+                            0x002007    0x002007      
+            109 out of 4358 program addresses used, program memory utilization is 2%
+
+
+
+                              Symbols - Sorted by Name
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                CONTRARIO   0x00001e    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+                  FIN_INT   0x000022    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+                   INICIO   0x000005    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+                 INT_TMR0   0x000021    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+    R1Decima_BucleExterno   0x000063    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+   R1Decima_BucleExterno2   0x000061    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+    R1Decima_BucleInterno   0x000065    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        R1ms_BucleExterno   0x00004d    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        R1ms_BucleInterno   0x00004f    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            RetardoMicros   0x000039    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        Retardo_100micros   0x000033    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            Retardo_100ms   0x00003f    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+         Retardo_10micros   0x000026    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+             Retardo_10ms   0x000045    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_10s   0x000057    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+          Retardo_1Decima   0x000060    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_1ms   0x00004b    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+               Retardo_1s   0x00005d    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        Retardo_200micros   0x000030    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            Retardo_200ms   0x00003d    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+         Retardo_20micros   0x000038    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+             Retardo_20ms   0x000043    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_20s   0x000055    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_2ms   0x000049    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+               Retardo_2s   0x00005b    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+          Retardo_4micros   0x00002c    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        Retardo_500micros   0x00002d    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            Retardo_500ms   0x00005f    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+         Retardo_50micros   0x000035    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+             Retardo_50ms   0x000041    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+          Retardo_5micros   0x00002b    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_5ms   0x000047    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+               Retardo_5s   0x000059    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardos_ms   0x00004c    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            Rmicros_Bucle   0x00003a    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+                    START   0x000019    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+
+
+
+                              Symbols - Sorted by Address
+                     Name    Address   Location    Storage File                     
+                ---------  ---------  ---------  --------- ---------                
+                   INICIO   0x000005    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+                    START   0x000019    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+                CONTRARIO   0x00001e    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+                 INT_TMR0   0x000021    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+                  FIN_INT   0x000022    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Programa_principal.asm
+         Retardo_10micros   0x000026    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+          Retardo_5micros   0x00002b    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+          Retardo_4micros   0x00002c    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        Retardo_500micros   0x00002d    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        Retardo_200micros   0x000030    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        Retardo_100micros   0x000033    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+         Retardo_50micros   0x000035    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+         Retardo_20micros   0x000038    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            RetardoMicros   0x000039    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            Rmicros_Bucle   0x00003a    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            Retardo_200ms   0x00003d    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            Retardo_100ms   0x00003f    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+             Retardo_50ms   0x000041    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+             Retardo_20ms   0x000043    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+             Retardo_10ms   0x000045    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_5ms   0x000047    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_2ms   0x000049    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_1ms   0x00004b    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardos_ms   0x00004c    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        R1ms_BucleExterno   0x00004d    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+        R1ms_BucleInterno   0x00004f    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_20s   0x000055    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+              Retardo_10s   0x000057    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+               Retardo_5s   0x000059    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+               Retardo_2s   0x00005b    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+               Retardo_1s   0x00005d    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+            Retardo_500ms   0x00005f    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+          Retardo_1Decima   0x000060    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+   R1Decima_BucleExterno2   0x000061    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+    R1Decima_BucleExterno   0x000063    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+    R1Decima_BucleInterno   0x000065    program     static D:\Electronica\Talleres_Virtuales\Taller1\Programas\Motor.X\Retardos.inc
+
+

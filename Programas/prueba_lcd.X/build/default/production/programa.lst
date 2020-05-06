@@ -1,0 +1,631 @@
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ; **** Encabezado ****
+Warning[205]: Found directive in column 1. (list)
+                      00002 list p=16F84A
+                      00003 #include "p16f84a.inc"
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Mar 17 2019
+                      00005 ;  MPASM PIC16F84A processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2019 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00209         LIST
+                      00004 
+                      00005 ; CONFIG
+                      00006 ; __config 0xFFF1
+2007   3FF1           00007  __CONFIG _FOSC_XT & _WDTE_OFF & _PWRTE_ON & _CP_OFF
+                      00008 
+                      00009 
+                      00010 
+                      00011 ;**** Declaración de Registros ****
+  0000000C            00012 LCD_Dato EQU    0X0C
+  0000000D            00013 Loop     EQU    0X0D
+                      00014 
+  0000000E            00015 Contador1       equ     0x0E    ;registro       para demoras
+  0000000F            00016 Contador2       equ     0x0F    ;registro       para demoras
+                      00017 
+                      00018          
+  00000000            00019 RS      equ     0
+  00000001            00020 RW      equ     1
+  00000002            00021 E       equ     2
+  00000003            00022 BACK    equ     3
+                      00023  
+  00000004            00024 D4      equ     4
+  00000005            00025 D5      equ     5
+  00000006            00026 D6      equ     6
+  00000007            00027 D7_BF   equ     7
+                      00028 ;**** Declaracion de Bytes del LCD ****
+  00000005            00029 LCD_PORT_Control        equ     PORTA   ; PORTA para control del LCD
+  00000006            00030 LCD_PORT_Data   equ     PORTB   ; PORTB para envio de Datos al LCD
+  00000085            00031 LCD_TRIS_Control        equ     0x85    ; TRISA
+  00000086            00032 LCD_TRIS_Data   equ     0x86    ; TRISB
+                      00033 ; **** Comandos de Software para la LCD ****
+  00000080            00034 LCDLinea1       equ     0x80    ; Dirección comienzo línea1
+  000000C0            00035 LCDLinea2       equ     0xC0    ; Dirección comienzo línea2
+  00000001            00036 LCDClr  equ     0x01    ; Borra pantalla, cursor a Inicio
+  00000002            00037 LCDInicio       equ     0x02    ; Cursor a Inicio, DDRAM sin cambios
+  00000006            00038 LCDInc  equ     0x06    ; Modo incrementa cursor
+  00000004            00039 LCDDec  equ     0x04    ; Modo decrementa cursor
+  0000000C            00040 LCDOn   equ     0x0C    ; Pantalla On
+  00000008            00041 LCDOff  equ     0x08    ; Pantalla Off
+  0000000E            00042 CursOn  equ     0x0E    ; Pantalla On, cursor On
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  0000000C            00043 CursOff equ     0x0C    ; Pantalla On, cursor Off
+  0000000F            00044 CursBlink       equ     0x0F    ; Pantalla On, Cursor parpadeante
+  00000010            00045 CurIzda equ     0x10    ; Mueve cursor a la izquierda
+  00000014            00046 CurDecha        equ     0x14    ; Mueve cursor a la derecha
+  00000018            00047 DisIzda equ     0x18    ; Mueve Display a la izquierda
+  0000001C            00048 DisDecha        equ     0x1C    ; Mueve Display a la Derecha
+  00000028            00049 LCDBus_4_2      equ     0x28    ; Bus 4 bits, 2 líneas, 5x7
+                      00050 ;**** Definiciones para el ensamblador ****
+                      00051 #DEFINE LCD_E   LCD_PORT_Control,E
+                      00052 #DEFINE LCD_RS  LCD_PORT_Control,RS
+                      00053 #DEFINE LCD_RW  LCD_PORT_Control,RW
+                      00054 #DEFINE LCD_D4  LCD_PORT_Data,D4
+                      00055 #DEFINE LCD_D5  LCD_PORT_Data,D5
+                      00056 #DEFINE LCD_D6  LCD_PORT_Data,D6
+                      00057 #DEFINE LCD_D7_BF       LCD_PORT_Data,D7_BF
+                      00058 #DEFINE LCD_backlight   LCD_PORT_Control,BACK   ; Control Backligth.-
+                      00059 ;**** Definición de macros ****
+                      00060 LCD_Putc macro Carac
+                      00061 movlw   Carac
+                      00062 call    LCD_Caracter
+Warning[205]: Found directive in column 1. (endm)
+                      00063 endm
+                      00064 LCD_Putd macro Coman
+                      00065 movlw   Coman
+                      00066 call    LCD_Comando
+Warning[205]: Found directive in column 1. (endm)
+                      00067 endm
+                      00068 ;//////////////////////////////////////////////////////////
+                      00069 ;**** Inicio del Micro ****
+Warning[205]: Found directive in column 1. (org)
+                      00070 org     0x00
+Warning[203]: Found opcode in column 1. (goto)
+0000   2???           00071 goto    Inicio
+                      00072 ;**** Programa principal ****
+Warning[205]: Found directive in column 1. (org)
+                      00073 org     0x05
+0005                  00074 Inicio
+Warning[203]: Found opcode in column 1. (call)
+0005   2???           00075 call    LCD_Config_puertos      ; Configuramos Puertos a utilizar por LCD.-
+Warning[203]: Found opcode in column 1. (call)
+0006   2???           00076 call    LCD_Init        ; Inicializamos LCD.-
+Warning[203]: Found opcode in column 1. (bsf)
+0007   1585           00077 bsf     LCD_backlight   ; Prendemos Backlight.-
+                      00078 ;LCD_Putd CursBlink     ; Cursor Parpadeante.-
+Warning[203]: Found opcode in column 1. (MOVLW)
+0008   3049           00079 MOVLW   'I'     ; Escribimos en LCD.-
+Warning[203]: Found opcode in column 1. (CALL)
+0009   2???           00080 CALL    LCD_Caracter
+Warning[206]: Found call to macro in column 1. (LCD_Putc)
+                      00081 LCD_Putc 'n'
+Warning[203]: Found opcode in column 1. (movlw)
+000A   306E               M movlw   'n'
+Warning[203]: Found opcode in column 1. (call)
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000B   2???               M call    LCD_Caracter
+Warning[206]: Found call to macro in column 1. (LCD_Putc)
+                      00082 LCD_Putc 'f'
+Warning[203]: Found opcode in column 1. (movlw)
+000C   3066               M movlw   'f'
+Warning[203]: Found opcode in column 1. (call)
+000D   2???               M call    LCD_Caracter
+Warning[206]: Found call to macro in column 1. (LCD_Putc)
+                      00083 LCD_Putc 'o'
+Warning[203]: Found opcode in column 1. (movlw)
+000E   306F               M movlw   'o'
+Warning[203]: Found opcode in column 1. (call)
+000F   2???               M call    LCD_Caracter
+Warning[206]: Found call to macro in column 1. (LCD_Putc)
+                      00084 LCD_Putc 'P'
+Warning[203]: Found opcode in column 1. (movlw)
+0010   3050               M movlw   'P'
+Warning[203]: Found opcode in column 1. (call)
+0011   2???               M call    LCD_Caracter
+Warning[206]: Found call to macro in column 1. (LCD_Putc)
+                      00085 LCD_Putc 'I'
+Warning[203]: Found opcode in column 1. (movlw)
+0012   3049               M movlw   'I'
+Warning[203]: Found opcode in column 1. (call)
+0013   2???               M call    LCD_Caracter
+Warning[206]: Found call to macro in column 1. (LCD_Putc)
+                      00086 LCD_Putc 'C'
+Warning[203]: Found opcode in column 1. (movlw)
+0014   3043               M movlw   'C'
+Warning[203]: Found opcode in column 1. (call)
+0015   2???               M call    LCD_Caracter
+0016                  00087 Bucle
+Warning[203]: Found opcode in column 1. (nop)
+0016   0000           00088 nop
+Warning[203]: Found opcode in column 1. (GOTO)
+0017   2???           00089 GOTO    Bucle   ; Bucle Infinito.-
+                      00090 
+                      00091 ;**** Configuracion de puertos ****
+0018                  00092 LCD_Config_puertos
+Warning[203]: Found opcode in column 1. (bsf)
+0018   1683           00093 bsf     STATUS,RP0      ; Seleccionamos Banco 1.-
+Warning[203]: Found opcode in column 1. (bcf)
+0019   1005           00094 bcf     LCD_RS  ; Colocamos todas las lineas de control y bus como Salidas.-
+Warning[203]: Found opcode in column 1. (bcf)
+001A   1085           00095 bcf     LCD_RW  
+Warning[203]: Found opcode in column 1. (bcf)
+001B   1105           00096 bcf     LCD_E   
+Warning[203]: Found opcode in column 1. (bcf)
+001C   1206           00097 bcf     LCD_D4  
+Warning[203]: Found opcode in column 1. (bcf)
+001D   1286           00098 bcf     LCD_D5  
+Warning[203]: Found opcode in column 1. (bcf)
+001E   1306           00099 bcf     LCD_D6  
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[203]: Found opcode in column 1. (bcf)
+001F   1386           00100 bcf     LCD_D7_BF       
+Warning[203]: Found opcode in column 1. (bcf)
+0020   1185           00101 bcf     LCD_backlight   
+Warning[203]: Found opcode in column 1. (bcf)
+0021   1283           00102 bcf     STATUS,RP0      ;       Volvemos an Banco       0.-
+Warning[203]: Found opcode in column 1. (bcf)
+0022   1005           00103 bcf     LCD_RS  
+Warning[203]: Found opcode in column 1. (bcf)
+0023   1085           00104 bcf     LCD_RW  
+Warning[203]: Found opcode in column 1. (bcf)
+0024   1105           00105 bcf     LCD_E   
+Warning[203]: Found opcode in column 1. (bcf)
+0025   1206           00106 bcf     LCD_D4  
+Warning[203]: Found opcode in column 1. (bcf)
+0026   1286           00107 bcf     LCD_D5  
+Warning[203]: Found opcode in column 1. (bcf)
+0027   1306           00108 bcf     LCD_D6  
+Warning[203]: Found opcode in column 1. (bcf)
+0028   1386           00109 bcf     LCD_D7_BF       
+Warning[203]: Found opcode in column 1. (bcf)
+0029   1185           00110 bcf     LCD_backlight   
+Warning[203]: Found opcode in column 1. (return)
+002A   0008           00111 return          
+                      00112 ;...................................
+                      00113 ;**** Inicializacion de LCD ****
+002B                  00114 LCD_Init
+Warning[203]: Found opcode in column 1. (bcf)
+002B   1283           00115 bcf     STATUS,RP0      ; Aseguramos Banco 0.-
+Warning[203]: Found opcode in column 1. (movlw)
+002C   3003           00116 movlw   0x03    
+Warning[203]: Found opcode in column 1. (movwf)
+002D   008D           00117 movwf   Loop    
+Warning[203]: Found opcode in column 1. (bsf)
+002E   1606           00118 bsf     LCD_D4  ;<D7 D6 D5 D4> = 0011.-
+Warning[203]: Found opcode in column 1. (bsf)
+002F   1686           00119 bsf     LCD_D5  
+                      00120 ;.... se ejecuta 3 veces el siguiente bloque ....
+Warning[203]: Found opcode in column 1. (bsf)
+0030   1505           00121 bsf     LCD_E
+Warning[203]: Found opcode in column 1. (call)
+0031   2???           00122 call    Demora_5ms      
+Warning[203]: Found opcode in column 1. (bcf)
+0032   1105           00123 bcf     LCD_E
+Warning[203]: Found opcode in column 1. (call)
+0033   2???           00124 call    Demora_5ms      
+Warning[203]: Found opcode in column 1. (decfsz)
+Message[305]: Using default destination of 1 (file).
+0034   0B8D           00125 decfsz Loop
+Warning[203]: Found opcode in column 1. (goto)
+0035   2???           00126 goto    $-5
+                      00127 ;.... Interfase de 4 bits ....
+Warning[203]: Found opcode in column 1. (bcf)
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0036   1206           00128 bcf     LCD_D4  ;<D7 D6 D5 D4> = 0010.-
+Warning[203]: Found opcode in column 1. (bsf)
+0037   1505           00129 bsf     LCD_E
+Warning[203]: Found opcode in column 1. (call)
+0038   2???           00130 call    Demora_5ms      
+Warning[203]: Found opcode in column 1. (bcf)
+0039   1105           00131 bcf     LCD_E
+Warning[203]: Found opcode in column 1. (call)
+003A   2???           00132 call    Demora_5ms      
+                      00133 ;.... Sistema -> << Bus de 4 bits, 2 lineas, 5x7>>.-
+Warning[203]: Found opcode in column 1. (movlw)
+003B   3028           00134 movlw   LCDBus_4_2
+Warning[203]: Found opcode in column 1. (call)
+003C   2???           00135 call    LCD_Comando
+                      00136 ;....Limpia display y retorna al origen ....
+Warning[203]: Found opcode in column 1. (movlw)
+003D   3001           00137 movlw   LCDClr
+Warning[203]: Found opcode in column 1. (call)
+003E   2???           00138 call    LCD_Comando
+Warning[203]: Found opcode in column 1. (return)
+003F   0008           00139 return
+                      00140 ;.........................................
+                      00141 ;**** Lee Estado del LCD ****
+0040                  00142 LCD_Bandera
+Warning[203]: Found opcode in column 1. (bcf)
+0040   1085           00143 bcf     LCD_RW  
+Warning[203]: Found opcode in column 1. (bcf)
+0041   1005           00144 bcf     LCD_RS  
+Warning[203]: Found opcode in column 1. (bcf)
+0042   1105           00145 bcf     LCD_E   
+Warning[203]: Found opcode in column 1. (bcf)
+0043   1206           00146 bcf     LCD_D4  
+Warning[203]: Found opcode in column 1. (bcf)
+0044   1286           00147 bcf     LCD_D5  
+Warning[203]: Found opcode in column 1. (bcf)
+0045   1306           00148 bcf     LCD_D6  
+Warning[203]: Found opcode in column 1. (bcf)
+0046   1386           00149 bcf     LCD_D7_BF       
+Warning[203]: Found opcode in column 1. (NOP)
+0047   0000           00150 NOP
+Warning[203]: Found opcode in column 1. (BCF)
+0048   1085           00151 BCF     LCD_RW
+                      00152 ; Modo Lectura.-        
+Warning[203]: Found opcode in column 1. (bsf)
+0049   1683           00153 bsf     STATUS,RP0      ;       Banco 1.-
+Warning[203]: Found opcode in column 1. (bsf)
+004A   1786           00154 bsf     LCD_D7_BF       ;       Configura TRIS para recibir estado del          
+Warning[203]: Found opcode in column 1. (bcf)
+004B   1283           00155 bcf     STATUS,RP0      ;       Banco 1.-
+Warning[203]: Found opcode in column 1. (bsf)
+004C   1505           00156 bsf     LCD_E           
+Warning[203]: Found opcode in column 1. (nop)
+004D   0000           00157 nop                     
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[203]: Found opcode in column 1. (btfsc)
+004E   1B86           00158 btfsc   LCD_D7_BF       ;       Lee estado del LCD, 1-> Ocupado.-
+Warning[203]: Found opcode in column 1. (goto)
+004F   2???           00159 goto    $-1     ;       Esperamos a que se desocupe.-
+Warning[203]: Found opcode in column 1. (bcf)
+0050   1105           00160 bcf     LCD_E   ;       LCD_D7/BF->0, seguimos adelante.-
+Warning[203]: Found opcode in column 1. (bsf)
+0051   1683           00161 bsf     STATUS,RP0      ;       Banco 1.-
+Warning[203]: Found opcode in column 1. (bcf)
+0052   1386           00162 bcf     LCD_D7_BF       ;       Reconfigura TRIS para envio de Data.-
+Warning[203]: Found opcode in column 1. (bcf)
+0053   1283           00163 bcf     STATUS,RP0      ;       Banco 1.-
+Warning[203]: Found opcode in column 1. (return)
+0054   0008           00164 return                  
+                      00165 ;.............................
+                      00166 ;**** Envia pulso Enable ****
+0055                  00167 LCD_Enable
+Warning[203]: Found opcode in column 1. (bsf)
+0055   1505           00168 bsf     LCD_E
+Warning[203]: Found opcode in column 1. (nop)
+0056   0000           00169 nop
+Warning[203]: Found opcode in column 1. (nop)
+0057   0000           00170 nop
+Warning[203]: Found opcode in column 1. (bcf)
+0058   1105           00171 bcf     LCD_E
+Warning[203]: Found opcode in column 1. (return)
+0059   0008           00172 return
+                      00173 ;.............................
+                      00174 ;**** Envia Dato al LCD ****
+                      00175 ;*** Previamente configurado como Comando o como Caracter.-
+005A                  00176 LCD_Envio_Data
+Warning[203]: Found opcode in column 1. (movwf)
+005A   008C           00177 movwf   LCD_Dato        ;       Guardamos Dato a enviar.-
+Warning[203]: Found opcode in column 1. (bcf)
+005B   1206           00178 bcf     LCD_D4  ;       Cargamos un cero.-
+Warning[203]: Found opcode in column 1. (btfsc)
+005C   1A0C           00179 btfsc   LCD_Dato,4      ;       
+Warning[203]: Found opcode in column 1. (bsf)
+005D   1606           00180 bsf     LCD_D4                  
+Warning[203]: Found opcode in column 1. (bcf)
+005E   1286           00181 bcf     LCD_D5  ;               
+Warning[203]: Found opcode in column 1. (btfsc)
+005F   1A8C           00182 btfsc   LCD_Dato,5                      
+Warning[203]: Found opcode in column 1. (bsf)
+0060   1686           00183 bsf     LCD_D5                  
+Warning[203]: Found opcode in column 1. (bcf)
+0061   1306           00184 bcf     LCD_D6  ;               
+Warning[203]: Found opcode in column 1. (btfsc)
+0062   1B0C           00185 btfsc   LCD_Dato,6                      
+Warning[203]: Found opcode in column 1. (bsf)
+0063   1706           00186 bsf     LCD_D6                  
+Warning[203]: Found opcode in column 1. (bcf)
+0064   1386           00187 bcf     LCD_D7_BF       ;               
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[203]: Found opcode in column 1. (btfsc)
+0065   1B8C           00188 btfsc   LCD_Dato,7                      
+Warning[203]: Found opcode in column 1. (bsf)
+0066   1786           00189 bsf     LCD_D7_BF                       
+Warning[203]: Found opcode in column 1. (call)
+0067   2???           00190 call    LCD_Enable      ;       Habilitamos LCD para recepcion de       Data.-
+                      00191                         ;       CARGAMOS NIBLE BAJO EN PUERTO.- 
+Warning[203]: Found opcode in column 1. (bcf)
+0068   1206           00192 bcf     LCD_D4  ;       Cargamos un cero.-      
+Warning[203]: Found opcode in column 1. (btfsc)
+0069   180C           00193 btfsc   LCD_Dato,0      ;       Si es 1, modificamos a uno, sino        
+Warning[203]: Found opcode in column 1. (bsf)
+006A   1606           00194 bsf     LCD_D4  
+Warning[203]: Found opcode in column 1. (bcf)
+006B   1286           00195 bcf     LCD_D5  ;
+Warning[203]: Found opcode in column 1. (btfsc)
+006C   188C           00196 btfsc   LCD_Dato,1      
+Warning[203]: Found opcode in column 1. (bsf)
+006D   1686           00197 bsf     LCD_D5          
+Warning[203]: Found opcode in column 1. (bcf)
+006E   1306           00198 bcf     LCD_D6  ;       
+Warning[203]: Found opcode in column 1. (btfsc)
+006F   190C           00199 btfsc   LCD_Dato,2              
+Warning[203]: Found opcode in column 1. (bsf)
+0070   1706           00200 bsf     LCD_D6          
+Warning[203]: Found opcode in column 1. (bcf)
+0071   1386           00201 bcf     LCD_D7_BF       ;       
+Warning[203]: Found opcode in column 1. (btfsc)
+0072   198C           00202 btfsc   LCD_Dato,3              
+Warning[203]: Found opcode in column 1. (bsf)
+0073   1786           00203 bsf     LCD_D7_BF               
+Warning[203]: Found opcode in column 1. (call)
+0074   2???           00204 call    LCD_Enable      ; Habilitamos LCD para recepcion de     Data.-
+Warning[203]: Found opcode in column 1. (return)
+0075   0008           00205 return                  
+                      00206 
+                      00207 ;**** Envia Comando al LCD ****
+0076                  00208 LCD_Comando
+Warning[203]: Found opcode in column 1. (call)
+0076   2???           00209 call    LCD_Bandera     ;Controla si el LCD esta en condiciones de recibir un nuevo dato.-
+Warning[203]: Found opcode in column 1. (bcf)
+0077   1085           00210 bcf     LCD_RW  ; Modo escritura.-
+Warning[203]: Found opcode in column 1. (bcf)
+0078   1005           00211 bcf     LCD_RS  ; Se enviara Comando.-
+Warning[203]: Found opcode in column 1. (call)
+0079   2???           00212 call    LCD_Envio_Data ; Envio Comando.-
+Warning[203]: Found opcode in column 1. (return)
+007A   0008           00213 return
+                      00214 ;.............................
+                      00215 ;**** Envia Caracter al LCD ****
+007B                  00216 LCD_Caracter
+Warning[203]: Found opcode in column 1. (call)
+007B   2???           00217 call    LCD_Bandera     ;Controla si el LCD esta en condiciones de recibir un nuevo dato.-
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+Warning[203]: Found opcode in column 1. (bcf)
+007C   1085           00218 bcf     LCD_RW  ; Modo escritura.-
+Warning[203]: Found opcode in column 1. (bsf)
+007D   1405           00219 bsf     LCD_RS  ; Se enviara Caracter.-
+Warning[203]: Found opcode in column 1. (call)
+007E   2???           00220 call    LCD_Envio_Data ; Envio Caracter.-
+Warning[203]: Found opcode in column 1. (return)
+007F   0008           00221 return
+                      00222                         
+                      00223                         ;**** Demora ****
+0080                  00224 Demora_5ms
+Warning[203]: Found opcode in column 1. (movlw)
+0080   30C8           00225 movlw   0xC8    ; 200
+Warning[203]: Found opcode in column 1. (movwf)
+0081   008E           00226 movwf   Contador1       ; Iniciamos contador1.-
+0082                  00227 Repeticion1
+Warning[203]: Found opcode in column 1. (movlw)
+0082   3007           00228 movlw   0x07    ;
+Warning[203]: Found opcode in column 1. (movwf)
+0083   008F           00229 movwf   Contador2       ; Iniciamos contador2
+0084                  00230 Repeticion2
+Warning[203]: Found opcode in column 1. (decfsz)
+0084   0B8F           00231 decfsz Contador2,1      ; Decrementa Contador2 y si es 0 sale.-
+Warning[203]: Found opcode in column 1. (goto)
+0085   2???           00232 goto    Repeticion2     ; Si no es 0 repetimos ciclo.-
+Warning[203]: Found opcode in column 1. (decfsz)
+0086   0B8E           00233 decfsz Contador1,1      ; Decrementa Contador1.-
+Warning[203]: Found opcode in column 1. (goto)
+0087   2???           00234 goto    Repeticion1     ; Si no es cero repetimos ciclo.-
+Warning[203]: Found opcode in column 1. (return)
+0088   0008           00235 return  ; Regresa de la subrutina.-
+                      00236 
+Warning[205]: Found directive in column 1. (end)
+3FF1                  00237 end
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+BACK                              00000003
+Bucle                             00000016
+C                                 00000000
+Contador1                         0000000E
+Contador2                         0000000F
+CurDecha                          00000014
+CurIzda                           00000010
+CursBlink                         0000000F
+CursOff                           0000000C
+CursOn                            0000000E
+D4                                00000004
+D5                                00000005
+D6                                00000006
+D7_BF                             00000007
+DC                                00000001
+Demora_5ms                        00000080
+DisDecha                          0000001C
+DisIzda                           00000018
+E                                 00000002
+EEADR                             00000009
+EECON1                            00000088
+EECON2                            00000089
+EEDATA                            00000008
+EEIE                              00000006
+EEIF                              00000004
+F                                 00000001
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+IRP                               00000007
+Inicio                            00000005
+LCDBus_4_2                        00000028
+LCDClr                            00000001
+LCDDec                            00000004
+LCDInc                            00000006
+LCDInicio                         00000002
+LCDLinea1                         00000080
+LCDLinea2                         000000C0
+LCDOff                            00000008
+LCDOn                             0000000C
+LCD_Bandera                       00000040
+LCD_Caracter                      0000007B
+LCD_Comando                       00000076
+LCD_Config_puertos                00000018
+LCD_D4                            LCD_PORT_Data,D4
+LCD_D5                            LCD_PORT_Data,D5
+LCD_D6                            LCD_PORT_Data,D6
+LCD_D7_BF                         LCD_PORT_Data,D7_BF
+LCD_Dato                          0000000C
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+LCD_E                             LCD_PORT_Control,E
+LCD_Enable                        00000055
+LCD_Envio_Data                    0000005A
+LCD_Init                          0000002B
+LCD_PORT_Control                  00000005
+LCD_PORT_Data                     00000006
+LCD_Putc                          
+LCD_Putd                          
+LCD_RS                            LCD_PORT_Control,RS
+LCD_RW                            LCD_PORT_Control,RW
+LCD_TRIS_Control                  00000085
+LCD_TRIS_Data                     00000086
+LCD_backlight                     LCD_PORT_Control,BACK
+Loop                              0000000D
+NOT_PD                            00000003
+NOT_RBPU                          00000007
+NOT_TO                            00000004
+OPTION_REG                        00000081
+PCL                               00000002
+PCLATH                            0000000A
+PORTA                             00000005
+PORTB                             00000006
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+RS                                00000000
+RW                                00000001
+Repeticion1                       00000082
+Repeticion2                       00000084
+STATUS                            00000003
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+MPASM 5.84                      PROGRAMA.ASM   5-5-2020  12:44:34         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+W                                 00000000
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_.org_1_0035                      00000035
+_.org_1_004F                      0000004F
+_CONFIG                           00002007
+_CP_OFF                           00003FFF
+_CP_ON                            0000000F
+_DEVID1                           00002006
+_FOSC_EXTRC                       00003FFF
+_FOSC_HS                          00003FFE
+_FOSC_LP                          00003FFC
+_FOSC_XT                          00003FFD
+_HS_OSC                           00003FFE
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_LP_OSC                           00003FFC
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC                           00003FFF
+_WDTE_OFF                         00003FFB
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FFD
+__16F84A                          00000001
+
+Errors   :     0
+Warnings :   145 reported,     0 suppressed
+Messages :     1 reported,     0 suppressed
+
+

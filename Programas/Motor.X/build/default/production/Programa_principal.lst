@@ -1,0 +1,686 @@
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  1
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00001 ;
+                      00002 ;; PIC16F877A Configuration Bit Settings
+                      00003 ;
+                      00004 ;; Assembly source line config statements
+                      00005 ;
+                      00006 ;#include "p16f648a.inc"
+                      00007 ;
+                      00008 ;; CONFIG
+                      00009 ;; __config 0xFF21
+                      00010 ;CBLOCK
+                      00011 ;CUENTA
+                      00012 ;    ENDC
+                      00013 ;    
+                      00014 ;NUMERO EQU D'62' ; -> 100%
+                      00015 ;; CONFIG
+                      00016 ;; __config 0xFF21
+                      00017 ; __CONFIG _FOSC_XT & _WDTE_OFF & _PWRTE_ON & _MCLRE_ON & _BOREN_OFF & _LVP_OFF & _CPD_OFF & _CP_OFF
+                      00018 ; 
+                      00019 ;    ORG            0
+                      00020 ;    GOTO    INICIO
+                      00021 ;  
+                      00022 ;INICIO
+                      00023 ;    MOVLW   B'00000111'
+                      00024 ;    MOVWF   CMCON
+                      00025 ;    BSF            STATUS,RP0
+                      00026 ;    BSF            TRISA,0
+                      00027 ;    BCF            TRISB,0; PINES DIR
+                      00028 ;    BCF            TRISB,1
+                      00029 ;    BCF            TRISB,3; CCP1 PWM - enable motor
+                      00030 ;    MOVLW   D'187'; periodo 3 ms
+                      00031 ;    MOVWF   PR2
+                      00032 ;    BCF            STATUS,RP0
+                      00033 ;
+                      00034 ;    ;100% DUTY CYCLE -> 750 = 10111011 10
+                      00035 ;    ;50% -> X
+                      00036 ;    ;100% -> 750
+                      00037 ;    ; X = 750*50/100 = 375
+                      00038 ;    ; DUTY 10 BITS -> 375
+                      00039 ;    ; 01011101 11
+                      00040 ;;    MOVLW   B'01011101'
+                      00041 ;;    MOVWF   CCPR1L
+                      00042 ;;    BSF           CCP1CON,4; 1
+                      00043 ;;    BSF           CCP1CON,5; 0
+                      00044 ;    MOVLW   B'10111011'
+                      00045 ;    MOVWF   CCPR1L
+                      00046 ;    BSF            CCP1CON,4; 1
+                      00047 ;    BCF            CCP1CON,5; 0
+                      00048 ;    
+                      00049 ;    BSF            CCP1CON,3; PWM -> 11XX
+                      00050 ;    BSF            CCP1CON,2
+                      00051 ;    BSF            CCP1CON,1
+                      00052 ;    BSF            CCP1CON,0
+                      00053 ;    BSF            T2CON,0
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00054 ;    BSF            T2CON,1 ; PRESCALER 16
+                      00055 ;    BSF            T2CON,2; TMR2 ON
+                      00056 ;    CLRF    CUENTA
+                      00057 ;START
+                      00058 ;    BTFSS   PORTA,0
+                      00059 ;    GOTO    CONTRARIO
+                      00060 ;    BSF            PORTB,0
+                      00061 ;    BCF            PORTB,1
+                      00062 ;    GOTO    START
+                      00063 ;    
+                      00064 ;CONTRARIO
+                      00065 ;    BCF            PORTB,0
+                      00066 ;    BSF            PORTB,1
+                      00067 ;    GOTO    START
+                      00068 ;       END
+                      00069 ;       
+                      00070         
+                      00071 ; PIC16F877A Configuration Bit Settings
+                      00072 
+                      00073 ; Assembly source line config statements
+                      00074 
+                      00075 #include "p16f648a.inc"
+                      00001         LIST
+                      00002 
+                      00003 ;==========================================================================
+                      00004 ; Build date : Mar 17 2019
+                      00005 ;  MPASM PIC16F648A processor include
+                      00006 ; 
+                      00007 ;  (c) Copyright 1999-2019 Microchip Technology, All rights reserved
+                      00008 ;==========================================================================
+                      00009 
+                      00385         LIST
+                      00076 
+                      00077 ; CONFIG
+                      00078 ; __config 0xFF21
+Warning[205]: Found directive in column 1. (CBLOCK)
+Message[313]: CBLOCK constants will start with a value of 0.
+                      00079 CBLOCK
+  00000000            00080 CUENTA
+Warning[205]: Found directive in column 1. (ENDC)
+                      00081 ENDC
+                      00082     
+  00000005            00083 NUMERO EQU D'5' ; -> 100%
+                      00084 ; CONFIG
+                      00085 ; __config 0xFF21
+2007   3F21           00086  __CONFIG _FOSC_XT & _WDTE_OFF & _PWRTE_ON & _MCLRE_ON & _BOREN_OFF & _LVP_OFF & _CPD_OFF & _CP_OFF
+                      00087  
+                      00088     ORG     0
+0000   2???           00089     GOTO    INICIO
+                      00090     ORG     4
+0004   2???           00091     GOTO    INT_TMR0
+                      00092   
+0005                  00093 INICIO
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0005   3007           00094     MOVLW   B'00000111'
+0006   009F           00095     MOVWF   CMCON
+0007   1683           00096     BSF     STATUS,RP0
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0008   1405           00097     BSF     TRISA,0
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0009   1006           00098     BCF     TRISB,0; PINES DIR
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000A   1086           00099     BCF     TRISB,1
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000B   1186           00100     BCF     TRISB,3; CCP1 PWM - enable motor
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000C   1281           00101     BCF     OPTION_REG,5; TEMPORIZADOR
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000D   1181           00102     BCF     OPTION_REG,3; PSA -> TMR0
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000E   1501           00103     BSF     OPTION_REG,2;
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+000F   1481           00104     BSF     OPTION_REG,1
+Message[302]: Register in operand not in bank 0.  Ensure that bank bits are correct.
+0010   1401           00105     BSF     OPTION_REG,0; 111 -> 256 PRESCALER
+0011   1283           00106     BCF     STATUS,RP0
+0012   30D9           00107     MOVLW   D'217'
+0013   0081           00108     MOVWF   TMR0; TMR0 = 217
+0014   168B           00109     BSF     INTCON,T0IE; TMR0 INT HABILITADA
+0015   110B           00110     BCF     INTCON,2; FLANCO
+0016   178B           00111     BSF     INTCON,7; GIE -> 1
+0017   170B           00112     BSF     INTCON,6; PIEI -> 1
+0018   0180           00113     CLRF    CUENTA
+0019                  00114 START
+0019   1C05           00115     BTFSS   PORTA,0
+001A   2???           00116     GOTO    CONTRARIO
+001B   1406           00117     BSF     PORTB,0
+001C   1086           00118     BCF     PORTB,1
+001D   2???           00119     GOTO    START
+                      00120     
+001E                  00121 CONTRARIO
+001E   1006           00122     BCF     PORTB,0
+001F   1486           00123     BSF     PORTB,1
+0020   2???           00124     GOTO    START
+                      00125     
+0021                  00126 INT_TMR0
+0021   0180           00127     CLRF    CUENTA
+0022                  00128 FIN_INT
+0022   30F0           00129     MOVLW   D'240'
+0023   0081           00130     MOVWF   TMR0; TMR0 = 240
+0024   110B           00131     BCF     INTCON,2
+0025   0009           00132     RETFIE    
+                      00133     
+                      00134 #include "Retardos.inc"    
+                      00001         CBLOCK
+  00000001            00002         R_ContA                         ; Contadores para los retardos.
+  00000002            00003         R_ContB
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+  00000003            00004         R_ContC
+                      00005         ENDC
+                      00006         
+                      00007 ;CICLO DE MÁQUINA -> TCY
+                      00008 ; FOSC = 4MHZ
+                      00009 ; FCY = FOSC/4 = 4MHZ / 4 = 1MHz
+                      00010 ; TCY = 1/1MHz = 1us
+                      00011 
+                      00012 ; CADA RUTINA 1cm = 1us
+                      00013 ; goto call return retfie btfss btfsc -> 2cm = 2us
+                      00014         
+                      00015         
+                      00016 ;
+                      00017 ; RETARDOS de 4 hasta 10 microsegundos ---------------------------------------------------
+                      00018 ;
+                      00019 ; A continuación retardos pequeños teniendo en cuenta que para una frecuencia de 4 MHZ,
+                      00020 ; la llamada a subrutina "call" tarda 2 ciclos máquina, el retorno de subrutina
+                      00021 ; "return" toma otros 2 ciclos máquina y cada instrucción "nop" tarda 1 ciclo máquina.
+                      00022 ;
+0026                  00023 Retardo_10micros                        ; La llamada "call" aporta 2 ciclos máquina.
+0026   0000           00024         nop                             ; Aporta 1 ciclo máquina.
+0027   0000           00025         nop                             ; Aporta 1 ciclo máquina.
+0028   0000           00026         nop                             ; Aporta 1 ciclo máquina.
+0029   0000           00027         nop                             ; Aporta 1 ciclo máquina.
+002A   0000           00028         nop                             ; Aporta 1 ciclo máquina.
+002B                  00029 Retardo_5micros                         ; La llamada "call" aporta 2 ciclos máquina.
+002B   0000           00030         nop                             ; Aporta 1 ciclo máquina.
+002C                  00031 Retardo_4micros                         ; La llamada "call" aporta 2 ciclos máquina.
+002C   0008           00032         return                          ; El salto del retorno aporta 2 ciclos máquina.
+                      00033 ;
+                      00034 ; RETARDOS de 20 hasta 500 microsegundos ------------------------------------------------
+                      00035 ;
+002D                  00036 Retardo_500micros                               ; La llamada "call" aporta 2 ciclos máquina.
+002D   0000           00037         nop                             ; Aporta 1 ciclo máquina.
+002E   30A4           00038         movlw   d'164'                  ; Aporta 1 ciclo máquina. Este es el valor de "K".
+002F   2???           00039         goto    RetardoMicros           ; Aporta 2 ciclos máquina.
+0030                  00040 Retardo_200micros                               ; La llamada "call" aporta 2 ciclos máquina.
+0030   0000           00041         nop                             ; Aporta 1 ciclo máquina.
+0031   3040           00042         movlw   d'64'                   ; Aporta 1 ciclo máquina. Este es el valor de "K".
+0032   2???           00043         goto    RetardoMicros           ; Aporta 2 ciclos máquina.
+0033                  00044 Retardo_100micros                               ; La llamada "call" aporta 2 ciclos máquina.
+0033   301F           00045         movlw   d'31'                   ; Aporta 1 ciclo máquina. Este es el valor de "K".
+0034   2???           00046         goto    RetardoMicros           ; Aporta 2 ciclos máquina.
+0035                  00047 Retardo_50micros                                ; La llamada "call" aporta 2 ciclos máquina.
+0035   0000           00048         nop                             ; Aporta 1 ciclo máquina.
+0036   300E           00049         movlw   d'14'                   ; Aporta 1 ciclo máquina. Este es el valor de "K".
+0037   2???           00050         goto    RetardoMicros           ; Aporta 2 ciclos máquina.
+0038                  00051 Retardo_20micros                                ; La llamada "call" aporta 2 ciclos máquina.
+0038   3005           00052         movlw   d'5'                    ; Aporta 1 ciclo máquina. Este es el valor de "K".
+                      00053 ;
+                      00054 ; El próximo bloque "RetardoMicros" tarda:
+                      00055 ; 1 + (K-1) + 2 + (K-1)x2 + 2 = (2 + 3K) ciclos máquina.
+                      00056 ;
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0039                  00057 RetardoMicros
+0039   0081           00058         movwf   R_ContA                 ; Aporta 1 ciclo máquina.
+003A                  00059 Rmicros_Bucle
+003A   0B81           00060         decfsz  R_ContA,F               ; (K-1)x1 cm (cuando no salta) + 2 cm (al saltar).
+003B   2???           00061         goto    Rmicros_Bucle           ; Aporta (K-1)x2 ciclos máquina.
+003C   0008           00062         return                          ; El salto del retorno aporta 2 ciclos máquina.
+                      00063 ;
+                      00064 ;En total estas subrutinas tardan:
+                      00065 ; - Retardo_500micros:  2 + 1 + 1 + 2 + (2 + 3K) = 500 cm = 500 µs. (para K=164 y 4 MHz).
+                      00066 ; - Retardo_200micros:  2 + 1 + 1 + 2 + (2 + 3K) = 200 cm = 200 µs. (para K= 64 y 4 MHz).
+                      00067 ; - Retardo_100micros:  2     + 1 + 2 + (2 + 3K) = 100 cm = 100 µs. (para K= 31 y 4 MHz).
+                      00068 ; - Retardo_50micros :  2 + 1 + 1 + 2 + (2 + 3K) =  50 cm =  50 µs. (para K= 14 y 4 MHz).
+                      00069 ; - Retardo_20micros :  2     + 1     + (2 + 3K) =  20 cm =  20 µs. (para K=  5 y 4 MHz).
+                      00070 ;
+                      00071 ; RETARDOS de 1 ms hasta 200 ms. --------------------------------------------------------
+                      00072 ;
+003D                  00073 Retardo_200ms                           ; La llamada "call" aporta 2 ciclos máquina.
+003D   30C8           00074         movlw   d'200'                  ; Aporta 1 ciclo máquina. Este es el valor de "M".
+003E   2???           00075         goto    Retardos_ms             ; Aporta 2 ciclos máquina.
+003F                  00076 Retardo_100ms                           ; La llamada "call" aporta 2 ciclos máquina.
+003F   3064           00077         movlw   d'100'                  ; Aporta 1 ciclo máquina. Este es el valor de "M".
+0040   2???           00078         goto    Retardos_ms             ; Aporta 2 ciclos máquina.
+0041                  00079 Retardo_50ms                            ; La llamada "call" aporta 2 ciclos máquina.
+0041   3032           00080         movlw   d'50'                   ; Aporta 1 ciclo máquina. Este es el valor de "M".
+0042   2???           00081         goto    Retardos_ms             ; Aporta 2 ciclos máquina.
+0043                  00082 Retardo_20ms                            ; La llamada "call" aporta 2 ciclos máquina.
+0043   3014           00083         movlw   d'20'                   ; Aporta 1 ciclo máquina. Este es el valor de "M".
+0044   2???           00084         goto    Retardos_ms             ; Aporta 2 ciclos máquina.
+0045                  00085 Retardo_10ms                            ; La llamada "call" aporta 2 ciclos máquina.
+0045   300A           00086         movlw   d'10'                   ; Aporta 1 ciclo máquina. Este es el valor de "M".
+0046   2???           00087         goto    Retardos_ms             ; Aporta 2 ciclos máquina.
+0047                  00088 Retardo_5ms                             ; La llamada "call" aporta 2 ciclos máquina.
+0047   3005           00089         movlw   d'5'                    ; Aporta 1 ciclo máquina. Este es el valor de "M".
+0048   2???           00090         goto    Retardos_ms             ; Aporta 2 ciclos máquina.
+0049                  00091 Retardo_2ms                             ; La llamada "call" aporta 2 ciclos máquina.
+0049   3002           00092         movlw   d'2'                    ; Aporta 1 ciclo máquina. Este es el valor de "M".
+004A   2???           00093         goto    Retardos_ms             ; Aporta 2 ciclos máquina.
+004B                  00094 Retardo_1ms                             ; La llamada "call" aporta 2 ciclos máquina.
+004B   3001           00095         movlw   d'1'                    ; Aporta 1 ciclo máquina. Este es el valor de "M".
+                      00096 ;
+                      00097 ; El próximo bloque "Retardos_ms" tarda:
+                      00098 ; 1 + M + M + KxM + (K-1)xM + Mx2 + (K-1)Mx2 + (M-1) + 2 + (M-1)x2 + 2 =
+                      00099 ; = (2 + 4M + 4KM) ciclos máquina. Para K=249 y M=1 supone 1002 ciclos máquina
+                      00100 ; que a 4 MHz son 1002 µs = 1 ms.
+                      00101 ;
+004C                  00102 Retardos_ms
+004C   0082           00103         movwf   R_ContB                 ; Aporta 1 ciclo máquina.
+004D                  00104 R1ms_BucleExterno
+004D   30F9           00105         movlw   d'249'                  ; Aporta Mx1 ciclos máquina. Este es el valor de "K".
+004E   0081           00106         movwf   R_ContA                 ; Aporta Mx1 ciclos máquina.
+004F                  00107 R1ms_BucleInterno
+004F   0000           00108         nop                             ; Aporta KxMx1 ciclos máquina.
+0050   0B81           00109         decfsz  R_ContA,F               ; (K-1)xMx1 cm (cuando no salta) + Mx2 cm (al saltar).
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0051   2???           00110         goto    R1ms_BucleInterno               ; Aporta (K-1)xMx2 ciclos máquina.
+0052   0B82           00111         decfsz  R_ContB,F               ; (M-1)x1 cm (cuando no salta) + 2 cm (al saltar).
+0053   2???           00112         goto    R1ms_BucleExterno       ; Aporta (M-1)x2 ciclos máquina.
+0054   0008           00113         return                          ; El salto del retorno aporta 2 ciclos máquina.
+                      00114 ;
+                      00115 ;En total estas subrutinas tardan:
+                      00116 ; - Retardo_200ms:      2 + 1 + 2 + (2 + 4M + 4KM) = 200007 cm = 200 ms. (M=200 y K=249).
+                      00117 ; - Retardo_100ms:      2 + 1 + 2 + (2 + 4M + 4KM) = 100007 cm = 100 ms. (M=100 y K=249).
+                      00118 ; - Retardo_50ms :      2 + 1 + 2 + (2 + 4M + 4KM) =  50007 cm =  50 ms. (M= 50 y K=249).
+                      00119 ; - Retardo_20ms :      2 + 1 + 2 + (2 + 4M + 4KM) =  20007 cm =  20 ms. (M= 20 y K=249).
+                      00120 ; - Retardo_10ms :      2 + 1 + 2 + (2 + 4M + 4KM) =  10007 cm =  10 ms. (M= 10 y K=249).
+                      00121 ; - Retardo_5ms  :      2 + 1 + 2 + (2 + 4M + 4KM) =   5007 cm =   5 ms. (M=  5 y K=249).
+                      00122 ; - Retardo_2ms  :      2 + 1 + 2 + (2 + 4M + 4KM) =   2007 cm =   2 ms. (M=  2 y K=249).
+                      00123 ; - Retardo_1ms  :      2 + 1     + (2 + 4M + 4KM) =   1005 cm =   1 ms. (M=  1 y K=249).
+                      00124 ;
+                      00125 ; RETARDOS de 0.5 hasta 20 segundos ---------------------------------------------------
+                      00126 ;
+0055                  00127 Retardo_20s                             ; La llamada "call" aporta 2 ciclos máquina.
+0055   30C8           00128         movlw   d'200'                  ; Aporta 1 ciclo máquina. Este es el valor de "N".
+0056   2???           00129         goto    Retardo_1Decima         ; Aporta 2 ciclos máquina.
+0057                  00130 Retardo_10s                             ; La llamada "call" aporta 2 ciclos máquina.
+0057   3064           00131         movlw   d'100'                  ; Aporta 1 ciclo máquina. Este es el valor de "N".
+0058   2???           00132         goto    Retardo_1Decima         ; Aporta 2 ciclos máquina.
+0059                  00133 Retardo_5s                              ; La llamada "call" aporta 2 ciclos máquina.
+0059   3032           00134         movlw   d'50'                   ; Aporta 1 ciclo máquina. Este es el valor de "N".
+005A   2???           00135         goto    Retardo_1Decima         ; Aporta 2 ciclos máquina.
+005B                  00136 Retardo_2s                              ; La llamada "call" aporta 2 ciclos máquina.
+005B   3014           00137         movlw   d'20'                   ; Aporta 1 ciclo máquina. Este es el valor de "N".
+005C   2???           00138         goto    Retardo_1Decima         ; Aporta 2 ciclos máquina.
+005D                  00139 Retardo_1s                              ; La llamada "call" aporta 2 ciclos máquina.
+005D   300A           00140         movlw   d'10'                   ; Aporta 1 ciclo máquina. Este es el valor de "N".
+005E   2???           00141         goto    Retardo_1Decima         ; Aporta 2 ciclos máquina.
+005F                  00142 Retardo_500ms                           ; La llamada "call" aporta 2 ciclos máquina.
+005F   3005           00143         movlw   d'5'                    ; Aporta 1 ciclo máquina. Este es el valor de "N".
+                      00144 ;
+                      00145 ; El próximo bloque "Retardo_1Decima" tarda:
+                      00146 ; 1 + N + N + MxN + MxN + KxMxN + (K-1)xMxN + MxNx2 + (K-1)xMxNx2 +
+                      00147 ;   + (M-1)xN + Nx2 + (M-1)xNx2 + (N-1) + 2 + (N-1)x2 + 2 =
+                      00148 ; = (2 + 4M + 4MN + 4KM) ciclos máquina. Para K=249, M=100 y N=1 supone 100011
+                      00149 ; ciclos máquina que a 4 MHz son 100011 µs = 100 ms = 0,1 s = 1 décima de segundo.
+                      00150 ;
+0060                  00151 Retardo_1Decima
+0060   0083           00152         movwf   R_ContC                 ; Aporta 1 ciclo máquina.
+0061                  00153 R1Decima_BucleExterno2
+0061   3064           00154         movlw   d'100'                  ; Aporta Nx1 ciclos máquina. Este es el valor de "M".
+0062   0082           00155         movwf   R_ContB                 ; Aporta Nx1 ciclos máquina.
+0063                  00156 R1Decima_BucleExterno
+0063   30F9           00157         movlw   d'249'                  ; Aporta MxNx1 ciclos máquina. Este es el valor de "K".
+0064   0081           00158         movwf   R_ContA                 ; Aporta MxNx1 ciclos máquina.
+0065                  00159 R1Decima_BucleInterno          
+0065   0000           00160         nop                             ; Aporta KxMxNx1 ciclos máquina.
+0066   0B81           00161         decfsz  R_ContA,F               ; (K-1)xMxNx1 cm (si no salta) + MxNx2 cm (al saltar).
+0067   2???           00162         goto    R1Decima_BucleInterno   ; Aporta (K-1)xMxNx2 ciclos máquina.
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0068   0B82           00163         decfsz  R_ContB,F               ; (M-1)xNx1 cm (cuando no salta) + Nx2 cm (al saltar).
+0069   2???           00164         goto    R1Decima_BucleExterno   ; Aporta (M-1)xNx2 ciclos máquina.
+006A   0B83           00165         decfsz  R_ContC,F               ; (N-1)x1 cm (cuando no salta) + 2 cm (al saltar).
+006B   2???           00166         goto    R1Decima_BucleExterno2  ; Aporta (N-1)x2 ciclos máquina.
+006C   0008           00167         return                          ; El salto del retorno aporta 2 ciclos máquina.
+                      00168 ;
+                      00169 ;En total estas subrutinas tardan:
+                      00170 ; - Retardo_20s:        2 + 1 + 2 + (2 + 4N + 4MN + 4KMN) = 20000807 cm = 20 s.
+                      00171 ;                       (N=200, M=100 y K=249).
+                      00172 ; - Retardo_10s:        2 + 1 + 2 + (2 + 4N + 4MN + 4KMN) = 10000407 cm = 10 s.
+                      00173 ;                       (N=100, M=100 y K=249).
+                      00174 ; - Retardo_5s:         2 + 1 + 2 + (2 + 4N + 4MN + 4KMN) =  5000207 cm =  5 s.
+                      00175 ;                       (N= 50, M=100 y K=249).
+                      00176 ; - Retardo_2s:         2 + 1 + 2 + (2 + 4N + 4MN + 4KMN) =  2000087 cm =  2 s.
+                      00177 ;                       (N= 20, M=100 y K=249).
+                      00178 ; - Retardo_1s:         2 + 1 + 2 + (2 + 4N + 4MN + 4KMN) =  1000047 cm =  1 s.
+                      00179 ;                       (N= 10, M=100 y K=249).
+                      00180 ; - Retardo_500ms:      2 + 1     + (2 + 4N + 4MN + 4KMN) =   500025 cm = 0,5 s.
+                      00181 ;                       (N=  5, M=100 y K=249).
+                      00182 
+                      00183 ;       ===================================================================
+                      00184 ;         Del libro "MICROCONTROLADOR PIC16F84. DESARROLLO DE PROYECTOS"
+                      00185 ;         E. Palacios, F. Remiro y L. López.
+                      00186 ;         Editorial Ra-Ma.  www.ra-ma.es
+                      00187 ;       =====================================================
+                      00188 
+                      00189 
+                      00190 
+                      00191 
+                      00192 
+                      00135     
+3F21                  00136         END
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  8
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+ADDEN                             00000003
+ADEN                              00000003
+BRGH                              00000002
+C                                 00000000
+C1INV                             00000004
+C1OUT                             00000006
+C2INV                             00000005
+C2OUT                             00000007
+CCP1CON                           00000017
+CCP1IE                            00000002
+CCP1IF                            00000002
+CCP1M0                            00000000
+CCP1M1                            00000001
+CCP1M2                            00000002
+CCP1M3                            00000003
+CCP1X                             00000005
+CCP1Y                             00000004
+CCPR1                             00000015
+CCPR1H                            00000016
+CCPR1L                            00000015
+CIS                               00000003
+CM0                               00000000
+CM1                               00000001
+CM2                               00000002
+CMCON                             0000001F
+CMIE                              00000006
+CMIF                              00000006
+CONTRARIO                         0000001E
+CREN                              00000004
+CSRC                              00000007
+CUENTA                            00000000
+DC                                00000001
+EEADR                             0000009B
+EECON1                            0000009C
+EECON2                            0000009D
+EEDATA                            0000009A
+EEIE                              00000007
+EEIF                              00000007
+F                                 00000001
+FERR                              00000002
+FIN_INT                           00000022
+FSR                               00000004
+GIE                               00000007
+INDF                              00000000
+INICIO                            00000005
+INTCON                            0000000B
+INTE                              00000004
+INTEDG                            00000006
+INTF                              00000001
+INT_TMR0                          00000021
+IRP                               00000007
+NOT_BO                            00000000
+NOT_BOD                           00000000
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE  9
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+NOT_BOR                           00000000
+NOT_PD                            00000003
+NOT_POR                           00000001
+NOT_RBPU                          00000007
+NOT_T1SYNC                        00000002
+NOT_TO                            00000004
+NUMERO                            00000005
+OERR                              00000001
+OPTION_REG                        00000081
+OSCF                              00000003
+PCL                               00000002
+PCLATH                            0000000A
+PCON                              0000008E
+PEIE                              00000006
+PIE1                              0000008C
+PIR1                              0000000C
+PORTA                             00000005
+PORTB                             00000006
+PR2                               00000092
+PS0                               00000000
+PS1                               00000001
+PS2                               00000002
+PSA                               00000003
+R1Decima_BucleExterno             00000063
+R1Decima_BucleExterno2            00000061
+R1Decima_BucleInterno             00000065
+R1ms_BucleExterno                 0000004D
+R1ms_BucleInterno                 0000004F
+RA0                               00000000
+RA1                               00000001
+RA2                               00000002
+RA3                               00000003
+RA4                               00000004
+RA5                               00000005
+RA6                               00000006
+RA7                               00000007
+RB0                               00000000
+RB1                               00000001
+RB2                               00000002
+RB3                               00000003
+RB4                               00000004
+RB5                               00000005
+RB6                               00000006
+RB7                               00000007
+RBIE                              00000003
+RBIF                              00000000
+RCIE                              00000005
+RCIF                              00000005
+RCREG                             0000001A
+RCSTA                             00000018
+RD                                00000000
+RP0                               00000005
+RP1                               00000006
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE 10
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+RX9                               00000006
+RX9D                              00000000
+R_ContA                           00000001
+R_ContB                           00000002
+R_ContC                           00000003
+RetardoMicros                     00000039
+Retardo_100micros                 00000033
+Retardo_100ms                     0000003F
+Retardo_10micros                  00000026
+Retardo_10ms                      00000045
+Retardo_10s                       00000057
+Retardo_1Decima                   00000060
+Retardo_1ms                       0000004B
+Retardo_1s                        0000005D
+Retardo_200micros                 00000030
+Retardo_200ms                     0000003D
+Retardo_20micros                  00000038
+Retardo_20ms                      00000043
+Retardo_20s                       00000055
+Retardo_2ms                       00000049
+Retardo_2s                        0000005B
+Retardo_4micros                   0000002C
+Retardo_500micros                 0000002D
+Retardo_500ms                     0000005F
+Retardo_50micros                  00000035
+Retardo_50ms                      00000041
+Retardo_5micros                   0000002B
+Retardo_5ms                       00000047
+Retardo_5s                        00000059
+Retardos_ms                       0000004C
+Rmicros_Bucle                     0000003A
+SPBRG                             00000099
+SPEN                              00000007
+SREN                              00000005
+START                             00000019
+STATUS                            00000003
+SYNC                              00000004
+T0CS                              00000005
+T0IE                              00000005
+T0IF                              00000002
+T0SE                              00000004
+T1CKPS0                           00000004
+T1CKPS1                           00000005
+T1CON                             00000010
+T1OSCEN                           00000003
+T2CKPS0                           00000000
+T2CKPS1                           00000001
+T2CON                             00000012
+TMR0                              00000001
+TMR0IE                            00000005
+TMR0IF                            00000002
+TMR1                              0000000E
+TMR1CS                            00000001
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE 11
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+TMR1H                             0000000F
+TMR1IE                            00000000
+TMR1IF                            00000000
+TMR1L                             0000000E
+TMR1ON                            00000000
+TMR2                              00000011
+TMR2IE                            00000001
+TMR2IF                            00000001
+TMR2ON                            00000002
+TOUTPS0                           00000003
+TOUTPS1                           00000004
+TOUTPS2                           00000005
+TOUTPS3                           00000006
+TRISA                             00000085
+TRISA0                            00000000
+TRISA1                            00000001
+TRISA2                            00000002
+TRISA3                            00000003
+TRISA4                            00000004
+TRISA5                            00000005
+TRISA6                            00000006
+TRISA7                            00000007
+TRISB                             00000086
+TRISB0                            00000000
+TRISB1                            00000001
+TRISB2                            00000002
+TRISB3                            00000003
+TRISB4                            00000004
+TRISB5                            00000005
+TRISB6                            00000006
+TRISB7                            00000007
+TRMT                              00000001
+TX9                               00000006
+TX9D                              00000000
+TXEN                              00000005
+TXIE                              00000004
+TXIF                              00000004
+TXREG                             00000019
+TXSTA                             00000098
+VR0                               00000000
+VR1                               00000001
+VR2                               00000002
+VR3                               00000003
+VRCON                             0000009F
+VREN                              00000007
+VROE                              00000006
+VRR                               00000005
+W                                 00000000
+WR                                00000001
+WREN                              00000002
+WRERR                             00000003
+Z                                 00000002
+_BODEN_OFF                        00003FBF
+MPASM 5.84            PROGRAMA_PRINCIPAL.ASM   5-6-2020  12:13:42         PAGE 12
+
+
+SYMBOL TABLE
+  LABEL                             VALUE 
+
+_BODEN_ON                         00003FFF
+_BOREN_OFF                        00003FBF
+_BOREN_ON                         00003FFF
+_CONFIG                           00002007
+_CPD_OFF                          00003FFF
+_CPD_ON                           00003EFF
+_CP_OFF                           00003FFF
+_CP_ON                            00001FFF
+_DATA_CP_OFF                      00003FFF
+_DATA_CP_ON                       00003EFF
+_DEVID1                           00002006
+_ER_OSC_CLKOUT                    00003FFF
+_ER_OSC_NOCLKOUT                  00003FFE
+_EXTCLK_OSC                       00003FEF
+_FOSC_ECIO                        00003FEF
+_FOSC_EXTRCCLK                    00003FFF
+_FOSC_EXTRCIO                     00003FFE
+_FOSC_HS                          00003FEE
+_FOSC_INTOSCCLK                   00003FFD
+_FOSC_INTOSCIO                    00003FFC
+_FOSC_LP                          00003FEC
+_FOSC_XT                          00003FED
+_HS_OSC                           00003FEE
+_IDLOC0                           00002000
+_IDLOC1                           00002001
+_IDLOC2                           00002002
+_IDLOC3                           00002003
+_INTOSC_OSC_CLKOUT                00003FFD
+_INTOSC_OSC_NOCLKOUT              00003FFC
+_INTRC_OSC_CLKOUT                 00003FFD
+_INTRC_OSC_NOCLKOUT               00003FFC
+_LP_OSC                           00003FEC
+_LVP_OFF                          00003F7F
+_LVP_ON                           00003FFF
+_MCLRE_OFF                        00003FDF
+_MCLRE_ON                         00003FFF
+_PWRTE_OFF                        00003FFF
+_PWRTE_ON                         00003FF7
+_RC_OSC_CLKOUT                    00003FFF
+_RC_OSC_NOCLKOUT                  00003FFE
+_WDTE_OFF                         00003FFB
+_WDTE_ON                          00003FFF
+_WDT_OFF                          00003FFB
+_WDT_ON                           00003FFF
+_XT_OSC                           00003FED
+__16F648A                         00000001
+
+Errors   :     0
+Warnings :     2 reported,     0 suppressed
+Messages :    10 reported,     0 suppressed
+
+

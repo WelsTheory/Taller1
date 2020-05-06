@@ -18,7 +18,7 @@
 ;   TMR0 => 0 A 255
 ;
 ;   TMR0 = 256 - ((TIEMPO_DESEADO*FOSC)/(PRESCALER*4)) 
-;   (1mS) -> TMR0 = 256 - ((1ms*4MHZ)/(64*4))
+;   (1mS) -> TMR0 = 256 - ((10ms*4MHZ)/(256*4))
 ;   TMR0 = 240.375 = 240
     
 INICIO

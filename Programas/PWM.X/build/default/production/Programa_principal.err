@@ -1,0 +1,5 @@
+Warning[205] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\PWM.X\PROGRAMA_PRINCIPAL.ASM 8 : Found directive in column 1. (CBLOCK)
+Message[313] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\PWM.X\PROGRAMA_PRINCIPAL.ASM 8 : CBLOCK constants will start with a value of 0.
+Message[302] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\PWM.X\PROGRAMA_PRINCIPAL.ASM 22 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\PWM.X\PROGRAMA_PRINCIPAL.ASM 23 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\PWM.X\PROGRAMA_PRINCIPAL.ASM 25 : Register in operand not in bank 0.  Ensure that bank bits are correct.

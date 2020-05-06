@@ -1,0 +1,7 @@
+Warning[205] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\MOTORDC_PWM.X\PROGRAMA.ASM 8 : Found directive in column 1. (CBLOCK)
+Message[313] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\MOTORDC_PWM.X\PROGRAMA.ASM 8 : CBLOCK constants will start with a value of 0.
+Message[302] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\MOTORDC_PWM.X\PROGRAMA.ASM 24 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\MOTORDC_PWM.X\PROGRAMA.ASM 25 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\MOTORDC_PWM.X\PROGRAMA.ASM 26 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\MOTORDC_PWM.X\PROGRAMA.ASM 27 : Register in operand not in bank 0.  Ensure that bank bits are correct.
+Message[302] D:\ELECTRONICA\TALLERES_VIRTUALES\TALLER1\PROGRAMAS\MOTORDC_PWM.X\PROGRAMA.ASM 29 : Register in operand not in bank 0.  Ensure that bank bits are correct.
